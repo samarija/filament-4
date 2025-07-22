@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('company_contacts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('company_id');
             $table->string('name');
-            $table->foreignId('company_id')->contrained()->cascadeOnDelete();
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

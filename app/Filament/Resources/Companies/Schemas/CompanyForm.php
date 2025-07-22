@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Companies\Schemas;
 
 use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 
 class CompanyForm
@@ -13,16 +13,19 @@ class CompanyForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('CompanyName')
                     ->required(),
-                Group::make()
+                Section::make()
                     ->relationship(
                         'contact',
                         condition: fn (?array $state): bool => filled($state['name']),
                     )
+                    ->description('should be deleted if ContactName is empty.')
                     ->schema([
                         TextInput::make('name')
-                            ->label('Contact')
+                            ->label('ContactName')
                     ])
+                    ->columnSpanFull()
             ]);
     }
 }
